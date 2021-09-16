@@ -1,0 +1,47 @@
+﻿@model PRP_Demo.ViewModels.UserProfileViewModel
+@{
+    ViewBag.Title = "UserProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.User.FullName</h2>
+
+@{
+    var age = DateTime.Now.Year - Model.User.DateOfBirth.Year;
+}
+
+<ul>
+    <li>Gender: @Model.User.Gender.Name</li>
+    <li>Age: @age</li>
+    <li>Weight: @Model.User.WeightsInKg</li>
+</ul>
+
+<table class="table table-hover table-striped table-bordered">
+    <thead>
+        <tr>
+            <th class="text-center">Training Plan</th>
+            <th class="text-center">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var plan in Model.TrainingPlans)
+        {
+            <tr>
+                @if (plan.Finished == true)
+                {
+                    <td class="bg-success">@Html.ActionLink(plan.Name, "PlanDetail", "TrainingPlan", new { id = plan.Id }, null)</td>
+                    <td class="text-center bg-success">Finished</td>
+                }
+                else
+                {
+                    <td>@Html.ActionLink(plan.Name, "PlanDetail", "TrainingPlan", new { id = plan.Id }, null)</td>
+                    <td class="text-center">Running!</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="form-group">
+    @Html.ActionLink("Create Training Plan", "AddTrainingPlanForm", "TrainingPlan", new { id = Model.User.Id }, new { @class = "btn btn-primary btn-large" })
+</div>

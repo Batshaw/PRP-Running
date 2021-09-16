@@ -1,0 +1,51 @@
+﻿@model PRP_Demo.ViewModels.AddTrainingDaysViewModel
+@{
+    ViewBag.Title = "AddTrainingDayForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Training Days</h2>
+
+@using (Html.BeginForm("Save", "TrainingDay", new { pId = Model.TrainingPlanId }))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.DateOfWeekId)
+        @Html.DropDownListFor(m => m.DateOfWeekId, new SelectList(Model.DateOfWeeks, "Id", "Name"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.DateOfWeekId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.TrainingTypeId)
+        @Html.DropDownListFor(m => m.TrainingTypeId, new SelectList(Model.TrainingTypes, "Id", "Name"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.TrainingTypeId)
+    </div>
+
+    <h5>
+        Total time to finish the last
+        @Html.DropDownListFor(m => m.LastRaceDistance, Enumerable.Range(5, 15).Where(i => i % 5 == 0).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() })) 
+        km race:
+
+    </h5>
+    
+
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(m => m.Hour10k)
+            @Html.DropDownListFor(m => m.Hour10k, Enumerable.Range(0, 3).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+            @Html.ValidationMessageFor(m => m.Hour10k)
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(m => m.Min10k)
+            @Html.DropDownListFor(m => m.Min10k, Enumerable.Range(0, 60).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+            @Html.ValidationMessageFor(m => m.Min10k)
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(m => m.Sec10k)
+            @Html.DropDownListFor(m => m.Sec10k, Enumerable.Range(0, 60).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+            @Html.ValidationMessageFor(m => m.Sec10k)
+        </div>
+    </div>
+
+    @Html.HiddenFor(m => m.Id)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+}

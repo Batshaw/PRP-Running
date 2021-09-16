@@ -1,0 +1,59 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+
+namespace PRP_Demo.Models
+{
+    // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+    public class ApplicationUser : IdentityUser
+    {
+        [Required]
+        [StringLength(255)]
+        [Display(Name = "Fullname")]
+        public string FullName { get; set; }
+
+        [Required]
+        [Display(Name = "Date Of Birth")]
+        public DateTime DateOfBirth { get; set; }
+
+        [Display(Name = "Weight (kg)")]
+        public byte WeightsInKg { get; set; }
+
+        public Gender Gender { get; set; }
+
+        [Required]
+        [Display(Name = "Gender")]
+        public byte GenderId { get; set; }
+
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        {
+            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
+            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            // Add custom user claims here
+            return userIdentity;
+        }
+    }
+
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    {
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Gender> Genders { get; set; }
+        public DbSet<TrainingPlan> TrainingPlans { get; set; }
+        public DbSet<TrainingDay> TrainingDays { get; set; }
+        public DbSet<DateOfWeek> DateOfWeeks { get; set; }
+        public DbSet<TrainingType> TrainingTypes { get; set; }
+        public ApplicationDbContext()
+            : base("DefaultConnection", throwIfV1Schema: false)
+        {
+        }
+
+        public static ApplicationDbContext Create()
+        {
+            return new ApplicationDbContext();
+        }
+    }
+}

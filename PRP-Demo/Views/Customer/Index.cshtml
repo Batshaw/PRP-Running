@@ -1,0 +1,32 @@
+﻿@model IEnumerable<PRP_Demo.Models.Customer>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Customers</h2>
+
+<div class="form-group">
+    @Html.ActionLink("New Customer", "AddCustomerForm", "Customer", null, new { @class = "btn btn-primary btn-large" })
+</div>
+
+<table class="table table-hover table-striped text-center">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Date of Birth</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(customer.Name, "CustomerProfile", "Customer", new { id = customer.Id}, null)</td>
+                <td>@customer.Gender.Name</td>
+                <td>@customer.DateOfBirth.ToString("dd/MM/yyyy")</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

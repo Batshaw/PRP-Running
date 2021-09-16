@@ -1,0 +1,35 @@
+﻿@model PRP_Demo.ViewModels.AddCustomerViewModel
+@{
+    ViewBag.Title = "AddCustomerForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Customer's Information'</h2>
+
+@using (Html.BeginForm("Save", "Customer"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DateOfBirth)
+        @Html.TextBoxFor(m => m.DateOfBirth, "{0:d MMM yyyy}", new { @placeholder = "30 Dec 1999", @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.DateOfBirth)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.WeightsInKg)
+        @Html.TextBoxFor(m => m.WeightsInKg, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.WeightsInKg)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.GenderId)
+        @Html.DropDownListFor(m => m.GenderId, new SelectList(Model.Genders, "Id", "Name"), "Select Gender!", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.GenderId)
+    </div>
+
+    @Html.HiddenFor(m => m.Id)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+}

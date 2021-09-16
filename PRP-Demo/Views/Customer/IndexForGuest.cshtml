@@ -1,0 +1,26 @@
+﻿@model IEnumerable<PRP_Demo.Models.Customer>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Customers</h2>
+
+<table class="table table-hover table-striped table-bordered text-center">
+    <thead>
+        <tr>
+            <th class="text-center">Name</th>
+            <th class="text-center">Date of Birth</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@customer.Name</td>
+                <td>@customer.DateOfBirth.ToString("yyyy")</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

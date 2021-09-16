@@ -1,0 +1,8 @@
+﻿@model int?
+
+@{ 
+    var duration = TimeSpan.FromSeconds((double)Model);
+}
+
+@string.Format("{0}:{1}:{2}", duration.Hours, duration.Minutes, duration.Seconds)
+
